@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.bluelinelabs.logansquare.models.*;
 import android.content.Context;
 
+import android.os.Parcelable;
 import android.support.v4.app.NotificationCompat;
 import android.app.Notification;
 import java.io.IOException;
@@ -232,7 +233,10 @@ public class NotificationConverter implements TypeConverter<Notification> {
         if (simpleNotification.groupKey != null) {
             simpleNotification.groupSummary = (notification.flags & Notification.FLAG_GROUP_SUMMARY) == Notification.FLAG_GROUP_SUMMARY;
         }
-        simpleNotification.largeIcon = Bitmaps.base64((Bitmap) notification.extras.getParcelable(Notification.EXTRA_LARGE_ICON));
+        Parcelable parcelable = notification.extras.getParcelable(Notification.EXTRA_LARGE_ICON);
+        if (parcelable != null) {
+            simpleNotification.largeIcon = Bitmaps.base64((Bitmap) parcelable);
+        }
         if ((notification.flags & Notification.FLAG_SHOW_LIGHTS) == Notification.FLAG_SHOW_LIGHTS) {
             simpleNotification.lights = Arrays.asList(notification.ledARGB, notification.ledOnMS, notification.ledOffMS);
         }

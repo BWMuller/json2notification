@@ -140,9 +140,9 @@ public class NotificationConverter implements TypeConverter<Notification> {
             android.util.Log.d("json2notification", "priority:" + simpleNotification.priority);
             builder.setPriority(simpleNotification.priority);
         }
-        if (simpleNotification.publicVersion != null) {
-            builder.setPublicVersion(simpleNotification.publicVersion);
-        }
+//        if (simpleNotification.publicVersion != null) {
+//            builder.setPublicVersion(simpleNotification.publicVersion);
+//        }
         if (simpleNotification.showWhen != null) {
             builder.setShowWhen(simpleNotification.showWhen);
         }
@@ -170,10 +170,10 @@ public class NotificationConverter implements TypeConverter<Notification> {
             android.util.Log.d("json2notification", "subText:" + simpleNotification.subText);
             builder.setSubText(simpleNotification.subText);
         }
-        if (simpleNotification.tickerText != null) {
-            android.util.Log.d("json2notification", "tickerText:" + simpleNotification.tickerText);
-            builder.setTicker(simpleNotification.tickerText);
-        }
+//        if (simpleNotification.tickerText != null) {
+//            android.util.Log.d("json2notification", "tickerText:" + simpleNotification.tickerText);
+//            builder.setTicker(simpleNotification.tickerText);
+//        }
         if (simpleNotification.usesChronometer != null) {
             android.util.Log.d("json2notification", "usesChronometer:" + simpleNotification.usesChronometer);
             builder.setUsesChronometer(simpleNotification.usesChronometer);
@@ -250,7 +250,7 @@ public class NotificationConverter implements TypeConverter<Notification> {
         }
         simpleNotification.priority = notification.priority > 0 ? notification.priority : null;
         //simpleNotification.progress;
-        simpleNotification.publicVersion = notification.publicVersion;
+//        simpleNotification.publicVersion = notification.publicVersion;
         simpleNotification.showWhen = notification.extras.getBoolean(Notification.EXTRA_SHOW_WHEN);
         if (simpleNotification.showWhen) {
             simpleNotification.when = notification.when;
@@ -260,7 +260,7 @@ public class NotificationConverter implements TypeConverter<Notification> {
         simpleNotification.sortKey = notification.getSortKey();
         simpleNotification.sound = notification.sound;
         simpleNotification.subText = notification.extras.getString(Notification.EXTRA_SUB_TEXT);
-        simpleNotification.tickerText = notification.tickerText;
+//        simpleNotification.tickerText = notification.tickerText;
         simpleNotification.usesChronometer = notification.extras.getBoolean(Notification.EXTRA_SHOW_CHRONOMETER);
         simpleNotification.visibility = notification.visibility > 0 ? notification.visibility : null;
 

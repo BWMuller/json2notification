@@ -16,13 +16,14 @@
 
 package com.bluelinelabs.logansquare.typeconverters;
 
+import android.content.ComponentName;
+import android.content.Intent;
+
+import com.bluelinelabs.logansquare.models.SimpleIntent;
+import com.bluelinelabs.logansquare.models.SimpleIntent$$JsonObjectMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 
-import com.bluelinelabs.logansquare.models.*;
-
-import android.content.Context;
-import android.content.Intent;
 import java.io.IOException;
 
 /**
@@ -50,6 +51,15 @@ public class IntentConverter implements TypeConverter<Intent> {
         if (simpleIntent.uri != null) {
             intent.setData(simpleIntent.uri);
         }
+        intent.setType(simpleIntent.type);
+        if (simpleIntent.categories != null) {
+            for (String category : simpleIntent.categories) {
+                intent.addCategory(category);
+            }
+        }
+        if (simpleIntent.componentName != null) {
+            intent.setComponent(ComponentName.unflattenFromString(simpleIntent.componentName));
+        }
         return intent;
     }
 
@@ -64,6 +74,10 @@ public class IntentConverter implements TypeConverter<Intent> {
         SimpleIntent simpleIntent = new SimpleIntent();
         simpleIntent.uri = intent.getData();
         simpleIntent.action = intent.getAction();
+        simpleIntent.type = intent.getType();
+        simpleIntent.categories = intent.getCategories();
+        simpleIntent.componentName = intent.getComponent().flattenToString();
+
         if (writeFieldNameForObject) jsonGenerator.writeFieldName(fieldName);
         SimpleIntent$$JsonObjectMapper._serialize((SimpleIntent) simpleIntent, jsonGenerator, true);
     }

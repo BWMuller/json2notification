@@ -16,7 +16,6 @@
 
 package com.bluelinelabs.logansquare.typeconverters;
 
-import android.content.ComponentName;
 import android.content.Intent;
 
 import com.bluelinelabs.logansquare.models.SimpleIntent;
@@ -25,6 +24,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * <pre>
@@ -41,25 +41,15 @@ public class IntentConverter implements TypeConverter<Intent> {
     @Override
     public Intent parse(JsonParser jsonParser) throws IOException {
         SimpleIntent simpleIntent = SimpleIntent$$JsonObjectMapper._parse(jsonParser);
-        Intent intent = new Intent();
+        Intent intent = null;
 
-        android.util.Log.d("json2notification", "action:" + simpleIntent.action);
-        if (simpleIntent.action != null) {
-            intent.setAction(simpleIntent.action);
-        }
         android.util.Log.d("json2notification", "uri:" + simpleIntent.uri);
-        if (simpleIntent.uri != null) {
-            intent.setData(simpleIntent.uri);
+        try {
+            intent = Intent.parseUri(simpleIntent.uri, 0);
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
         }
-        intent.setType(simpleIntent.type);
-        if (simpleIntent.categories != null) {
-            for (String category : simpleIntent.categories) {
-                intent.addCategory(category);
-            }
-        }
-        if (simpleIntent.componentName != null) {
-            intent.setComponent(ComponentName.unflattenFromString(simpleIntent.componentName));
-        }
+
         return intent;
     }
 
@@ -72,11 +62,7 @@ public class IntentConverter implements TypeConverter<Intent> {
             return;
         }
         SimpleIntent simpleIntent = new SimpleIntent();
-        simpleIntent.uri = intent.getData();
-        simpleIntent.action = intent.getAction();
-        simpleIntent.type = intent.getType();
-        simpleIntent.categories = intent.getCategories();
-        simpleIntent.componentName = intent.getComponent().flattenToString();
+        simpleIntent.uri = intent.toUri(0);
 
         if (writeFieldNameForObject) jsonGenerator.writeFieldName(fieldName);
         SimpleIntent$$JsonObjectMapper._serialize((SimpleIntent) simpleIntent, jsonGenerator, true);

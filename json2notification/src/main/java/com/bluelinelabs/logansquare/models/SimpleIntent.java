@@ -16,13 +16,8 @@
 
 package com.bluelinelabs.logansquare.models;
 
-import android.net.Uri;
-
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-import com.bluelinelabs.logansquare.typeconverters.UriConverter;
-
-import java.util.Set;
 
 import proguard.annotation.Keep;
 import proguard.annotation.KeepClassMembers;
@@ -32,13 +27,5 @@ import proguard.annotation.KeepClassMembers;
 @JsonObject
 public class SimpleIntent {
     @JsonField
-    public String action;
-    @JsonField(typeConverter = UriConverter.class)
-    public Uri uri;
-    @JsonField
-    public String type;
-    @JsonField
-    public Set<String> categories;
-    @JsonField
-    public String componentName;
+    public String uri;
 }

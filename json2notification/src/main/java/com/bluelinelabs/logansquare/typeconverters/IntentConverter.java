@@ -45,7 +45,7 @@ public class IntentConverter implements TypeConverter<Intent> {
 
         android.util.Log.d("json2notification", "uri:" + simpleIntent.uri);
         try {
-            intent = Intent.parseUri(simpleIntent.uri, 0);
+            intent = Intent.parseUri(simpleIntent.uri, Intent.URI_INTENT_SCHEME);
         } catch (URISyntaxException ex) {
             ex.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class IntentConverter implements TypeConverter<Intent> {
             return;
         }
         SimpleIntent simpleIntent = new SimpleIntent();
-        simpleIntent.uri = intent.toUri(0);
+        simpleIntent.uri = intent.toUri(Intent.URI_INTENT_SCHEME);
 
         if (writeFieldNameForObject) jsonGenerator.writeFieldName(fieldName);
         SimpleIntent$$JsonObjectMapper._serialize((SimpleIntent) simpleIntent, jsonGenerator, true);

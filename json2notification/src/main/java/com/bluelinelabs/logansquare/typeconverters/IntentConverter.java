@@ -16,14 +16,15 @@
 
 package com.bluelinelabs.logansquare.typeconverters;
 
+import android.content.Intent;
+
+import com.bluelinelabs.logansquare.models.SimpleIntent;
+import com.bluelinelabs.logansquare.models.SimpleIntent$$JsonObjectMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 
-import com.bluelinelabs.logansquare.models.*;
-
-import android.content.Context;
-import android.content.Intent;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * <pre>
@@ -40,16 +41,15 @@ public class IntentConverter implements TypeConverter<Intent> {
     @Override
     public Intent parse(JsonParser jsonParser) throws IOException {
         SimpleIntent simpleIntent = new SimpleIntent$$JsonObjectMapper().parse(jsonParser);
-        Intent intent = new Intent();
+        Intent intent = null;
 
-        android.util.Log.d("json2notification", "action:" + simpleIntent.action);
-        if (simpleIntent.action != null) {
-            intent.setAction(simpleIntent.action);
-        }
         android.util.Log.d("json2notification", "uri:" + simpleIntent.uri);
-        if (simpleIntent.uri != null) {
-            intent.setData(simpleIntent.uri);
+        try {
+            intent = Intent.parseUri(simpleIntent.uri, Intent.URI_INTENT_SCHEME);
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
         }
+
         return intent;
     }
 
@@ -62,8 +62,8 @@ public class IntentConverter implements TypeConverter<Intent> {
             return;
         }
         SimpleIntent simpleIntent = new SimpleIntent();
-        simpleIntent.uri = intent.getData();
-        simpleIntent.action = intent.getAction();
+        simpleIntent.uri = intent.toUri(Intent.URI_INTENT_SCHEME);
+
         if (writeFieldNameForObject) jsonGenerator.writeFieldName(fieldName);
         new SimpleIntent$$JsonObjectMapper().serialize((SimpleIntent) simpleIntent, jsonGenerator, true);
     }

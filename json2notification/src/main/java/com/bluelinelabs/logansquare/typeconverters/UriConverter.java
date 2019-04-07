@@ -22,6 +22,7 @@ public class UriConverter extends StringBasedTypeConverter<Uri> {
 
     @Override
     public Uri getFromString(String string) {
+        if (string == null) return null;
         return Uri.parse(string);
     }
 

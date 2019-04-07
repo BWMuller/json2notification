@@ -16,18 +16,19 @@
 
 package com.bluelinelabs.logansquare.models;
 
-import android.app.Notification;
+import android.app.PendingIntent;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+import com.bluelinelabs.logansquare.typeconverters.BigPictureStyleConverter;
+import com.bluelinelabs.logansquare.typeconverters.UriConverter;
+
+import java.util.List;
 
 import proguard.annotation.Keep;
 import proguard.annotation.KeepClassMembers;
-import com.bluelinelabs.logansquare.typeconverters.*;
-import android.support.v4.app.NotificationCompat;
-import android.app.PendingIntent;
-import java.util.List;
-import android.net.Uri;
 
 /**
  *
@@ -113,8 +114,8 @@ public class SimpleNotification {
     public Integer priority;
 //    @JsonField
 //    public Progress progress;
-    @JsonField
-    public Notification publicVersion;
+//    @JsonField
+//    public Notification publicVersion;
     @JsonField
     public Boolean showWhen;
     @JsonField
@@ -125,8 +126,8 @@ public class SimpleNotification {
     public Uri sound;
     @JsonField
     public String subText;
-    @JsonField
-    public CharSequence tickerText;
+//    @JsonField
+//    public CharSequence tickerText;
     @JsonField
     public Boolean usesChronometer;
     @JsonField
